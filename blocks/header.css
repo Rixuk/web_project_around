@@ -1,6 +1,6 @@
 .header {
   max-width: 880px;
-  height: 74px;
+  height: auto;
   margin: 0 auto 0;
   padding-top: 45px;
   border-bottom: 1px solid #545454;
@@ -8,10 +8,22 @@
 .header__title {
   margin: 0;
   font-size: 32px;
+  padding-bottom: 41px;
 }
 #header__sup {
   margin: 0;
   font-size: 12px;
   position: relative;
   top: -12px;
+}
+@media (width < 880px) {
+  .header {
+    max-width: 282px;
+    padding-top: 28px;
+  }
+  .header__title {
+    padding-bottom: 32px;
+    width: auto;
+    margin: 0 auto;
+  }
 }

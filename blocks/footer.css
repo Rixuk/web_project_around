@@ -7,3 +7,9 @@
   color: #545454;
   margin: 0;
 }
+@media (width < 880px) {
+  .footer {
+    max-width: 282px;
+    padding: 50px 0 32px;
+  }
+}

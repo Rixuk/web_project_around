@@ -99,3 +99,12 @@
   cursor: pointer;
   opacity: 0.5;
 }
+@media (width < 880px) {
+  .elements {
+    max-width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    padding-top: 36px;
+    gap: 20px;
+  }
+}
