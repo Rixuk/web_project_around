@@ -8,6 +8,10 @@
   height: 100%;
   display: none;
 }
+.popup__opened {
+  display: flex;
+}
+
 .popup__container {
   position: relative;
   top: 30vh;
@@ -17,6 +21,17 @@
   background-color: #fff;
   color: #000;
   border-radius: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.popup__form {
+  display: flex;
+  margin: 0 auto 0;
+}
+.popup__info {
+  margin: 0 auto 0;
+  padding: 0;
+  border: none;
   display: flex;
   flex-flow: column nowrap;
 }

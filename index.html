@@ -25,30 +25,38 @@
           <div class="profile__picture"></div>
           <div class="profile__info">
             <div class="profile__name-and-button">
-              <h2 class="profile__name">Jacques Cousteau</h2>
+              <h2 class="profile__name" id="profile__name">Jacques Cousteau</h2>
               <button class="profile__button"></button>
             </div>
-            <p class="profile__profession">Explorador</p>
+            <p class="profile__profession" id="profile__profession">
+              Explorador
+            </p>
           </div>
           <div class="profile__add">
             <button class="profile__add-button">+</button>
           </div>
-          <div class="popup popup__opened">
+          <div class="popup">
             <div class="popup__container">
               <h2 class="popup__title popup__style">Editar perfil</h2>
-              <input
-                type="text"
-                placeholder="Nombre"
-                class="popup__name popup__style"
-                value="Jacques Cousteau"
-              />
-              <input
-                type="text"
-                placeholder="Acerca de mí"
-                class="popup__aboutme popup__style"
-                value="Explorador"
-              />
-              <button class="popup__save popup__style">Guardar</button>
+              <form class="popup__form">
+                <fieldset class="popup__info">
+                  <input
+                    type="text"
+                    placeholder="Nombre"
+                    class="popup__name popup__style"
+                    id="popup__name"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Acerca de mí"
+                    class="popup__aboutme popup__style"
+                    id="popup__job"
+                  />
+                  <button type="submit" class="popup__save popup__style">
+                    Guardar
+                  </button>
+                </fieldset>
+              </form>
               <button class="popup__close"></button>
             </div>
           </div>
@@ -102,5 +110,6 @@
         <p class="footer__copyright">&copy; 2024 Around The U.S.</p>
       </footer>
     </div>
+    <script src="./scripts/popup.js"></script>
   </body>
 </html>
