@@ -23,6 +23,9 @@
 }
 .profile__name {
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .profile__button {
   background-image: url("../images/Edit-Button.png");
@@ -39,6 +42,9 @@
 }
 .profile__profession {
   font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   margin: 16px 0 21px;
 }
 .profile__add {
