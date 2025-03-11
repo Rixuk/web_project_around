@@ -1,7 +1,7 @@
 .profile {
-  width: 100%;
+  max-width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   padding-top: 40px;
 }
 .profile__picture {
@@ -14,6 +14,7 @@
   border-radius: 50%;
 }
 .profile__info {
+  width: 60%;
 }
 .profile__name-and-button {
   margin: 0;
