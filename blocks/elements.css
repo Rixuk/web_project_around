@@ -14,58 +14,10 @@
   display: flex;
   flex-flow: column nowrap;
 }
-.elements__image1 {
+.elements__image {
   width: 282px;
   height: 282px;
-  background-image: url(../images/element1.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px 10px 0 0;
-}
-.elements__image2 {
-  width: 282px;
-  height: 282px;
-  background-image: url(../images/element2.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px 10px 0 0;
-}
-.elements__image3 {
-  width: 282px;
-  height: 282px;
-  background-image: url(../images/element3.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px 10px 0 0;
-}
-.elements__image4 {
-  width: 282px;
-  height: 282px;
-  background-image: url(../images/element4.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px 10px 0 0;
-}
-.elements__image5 {
-  width: 282px;
-  height: 282px;
-  background-image: url(../images/element5.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px 10px 0 0;
-}
-.elements__image6 {
-  width: 282px;
-  height: 282px;
-  background-image: url(../images/element6.jpeg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  object-fit: fill;
   border-radius: 10px 10px 0 0;
 }
 .elements__info {

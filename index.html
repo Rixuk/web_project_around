@@ -61,56 +61,27 @@
             </div>
           </div>
         </section>
-        <section class="elements">
-          <div class="elements__card">
-            <div class="elements__image1"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Valle de Yosemite</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__card">
-            <div class="elements__image2"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Lago Louise</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__card">
-            <div class="elements__image3"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Montañas Calvas</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__card">
-            <div class="elements__image4"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Latemar</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__card">
-            <div class="elements__image5"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Vanois National Park</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-          <div class="elements__card">
-            <div class="elements__image6"></div>
-            <div class="elements__info">
-              <h2 class="elements__location">Lago di Braies</h2>
-              <button class="elements__like"></button>
-            </div>
-          </div>
-        </section>
+        <!--Este es el contenedor donde se agregan todas las tarjetas creadas con "template", POR LO QUE ES IMPORTANTE TAMBIÉN TENERLO EN CUENTA-->
+        <section class="elements"></section>
       </main>
       <footer class="footer">
         <!--Cambio menor para poder tener una copia en este punto donde la página funciona bien.-->
         <p class="footer__copyright">&copy; 2024 Around The U.S. Original</p>
       </footer>
     </div>
+
+    <!--Init templates zone-->
+    <template id="elements__template">
+      <div class="elements__card">
+        <img class="elements__image" src="" alt="" />
+        <div class="elements__info">
+          <h2 class="elements__location"></h2>
+          <button class="elements__like"></button>
+        </div>
+      </div>
+    </template>
+
+    <!--Finish templates zone-->
     <script src="./scripts/index.js"></script>
   </body>
 </html>
