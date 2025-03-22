@@ -1,11 +1,17 @@
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 const editProfile = profile.querySelector(".profile__button");
+const editNewCards = profile.querySelector(".profile__add-button");
+
 const popup = content.querySelector(".popup");
 const popupForm = popup.querySelector(".popup__form");
 const popupClose = popup.querySelector(".popup__close");
-const elements = content.querySelector(".elements");
 
+const newCards = content.querySelector(".new-cards");
+const newCardsForm = newCards.querySelector(".new-cards__form");
+const newCardsClose = newCards.querySelector(".new-cards__close");
+
+const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
 
 const initCards = [
@@ -72,6 +78,19 @@ function closePopup() {
   popup.classList.toggle("popup__opened");
 }
 
+function showNewCards() {
+  newCards.classList.toggle("new-cards__opened");
+}
+
+function closeNewCards() {
+  newCards.classList.toggle("new-cards__opened");
+}
+
+//Eventos para edición de perfil
 editProfile.addEventListener("click", showPopup);
 popupClose.addEventListener("click", closePopup);
 popupForm.addEventListener("submit", handleProfileFormSubmit);
+
+//Eventos para agregar nueva tarjeta
+editNewCards.addEventListener("click", showNewCards);
+newCardsClose.addEventListener("click", closeNewCards);
