@@ -1,15 +1,19 @@
 const content = document.querySelector(".content");
+
+//Variables usadas para el botón de editar el perfil
 const profile = content.querySelector(".profile");
 const editProfile = profile.querySelector(".profile__button");
-const editNewCards = profile.querySelector(".profile__add-button");
 
+//Variables usadas para la ventana emergente de editar perfil
 const popup = content.querySelector(".popup");
 const popupForm = popup.querySelector(".popup__form");
 const popupClose = popup.querySelector(".popup__close");
 
+//Variables usadas para la ventana emergente de agregar nuevo lugar
 const newCards = content.querySelector(".new-cards");
-const newCardsForm = newCards.querySelector(".new-cards__form");
+const editNewCards = profile.querySelector(".profile__add-button");
 const newCardsClose = newCards.querySelector(".new-cards__close");
+const newCardsForm = newCards.querySelector(".new-cards__form");
 
 const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
@@ -82,6 +86,17 @@ function showNewCards() {
   newCards.classList.toggle("new-cards__opened");
 }
 
+//Función que se llamará cada que se vaya a agregar una nueva tarjeta.
+function addNewCard(urlValue, locationValue) {
+  const clonNewCard = elementsTemplate.content.cloneNode(true);
+  const urlNewCard = clonNewCard.querySelector(".elements__image");
+  const locationNewCard = clonNewCard.querySelector(".elements__location");
+
+  urlNewCard.src = urlValue;
+  locationNewCard.textContent = locationValue;
+
+  elements.prepend(clonNewCard);
+}
 function closeNewCards() {
   newCards.classList.toggle("new-cards__opened");
 }
@@ -91,6 +106,20 @@ editProfile.addEventListener("click", showPopup);
 popupClose.addEventListener("click", closePopup);
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
-//Eventos para agregar nueva tarjeta
+//Eventos para abrir ventana de agregar nueva tarjeta
 editNewCards.addEventListener("click", showNewCards);
 newCardsClose.addEventListener("click", closeNewCards);
+
+//Evento con función para agregar nueva tarjeta
+newCardsForm.addEventListener("submit", function (evt) {
+  evt.preventDefault();
+  const urlLink = document.querySelector(".new-cards__link");
+  const newCardName = document.querySelector(".new-cards__name");
+
+  addNewCard(urlLink.value, newCardName.value);
+
+  urlLink.value = "";
+  newCardName.value = "";
+
+  closeNewCards();
+});
