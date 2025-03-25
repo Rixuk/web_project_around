@@ -54,7 +54,11 @@ initCards.forEach(({ name, link }) => {
     .addEventListener("click", function (evt) {
       evt.target.classList.toggle("elements__like-enabled");
     });
-
+  clon
+    .querySelector(".elements__thrash")
+    .addEventListener("click", function (evt) {
+      evt.target.parentElement.remove();
+    });
   elements.appendChild(clon);
 });
 
@@ -98,7 +102,11 @@ function addNewCard(urlValue, locationValue) {
     .addEventListener("click", function (evt) {
       evt.target.classList.toggle("elements__like-enabled");
     });
-
+  clonNewCard
+    .querySelector(".elements__thrash")
+    .addEventListener("click", function (evt) {
+      evt.target.parentElement.remove();
+    });
   elements.prepend(clonNewCard);
 }
 function closeNewCards() {
@@ -127,6 +135,3 @@ newCardsForm.addEventListener("submit", function (evt) {
 
   closeNewCards();
 });
-
-//Evento para dar like y dislke a tarjetas
-elements.query;

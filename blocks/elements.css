@@ -13,6 +13,7 @@
   background-color: #fff;
   display: flex;
   flex-flow: column nowrap;
+  position: relative;
 }
 .elements__image {
   width: 282px;
@@ -62,6 +63,18 @@
   margin-left: auto;
   width: 21px;
   height: 19px;
+}
+.elements__thrash {
+  background-image: url(../images/Trash.png);
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19px;
+}
+.elements__thrash:hover {
+  cursor: pointer;
+  opacity: 0.5;
 }
 @media (width < 880px) {
   .elements {
