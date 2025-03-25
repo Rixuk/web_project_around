@@ -47,11 +47,13 @@ const initCards = [
 
 initCards.forEach(({ name, link }) => {
   const clon = elementsTemplate.content.cloneNode(true);
-  const image = clon.querySelector(".elements__image");
-  const location = clon.querySelector(".elements__location");
-
-  image.src = link;
-  location.textContent = name;
+  clon.querySelector(".elements__image").src = link;
+  clon.querySelector(".elements__location").textContent = name;
+  clon
+    .querySelector(".elements__like")
+    .addEventListener("click", function (evt) {
+      evt.target.classList.toggle("elements__like-enabled");
+    });
 
   elements.appendChild(clon);
 });
@@ -89,11 +91,13 @@ function showNewCards() {
 //Función que se llamará cada que se vaya a agregar una nueva tarjeta.
 function addNewCard(urlValue, locationValue) {
   const clonNewCard = elementsTemplate.content.cloneNode(true);
-  const urlNewCard = clonNewCard.querySelector(".elements__image");
-  const locationNewCard = clonNewCard.querySelector(".elements__location");
-
-  urlNewCard.src = urlValue;
-  locationNewCard.textContent = locationValue;
+  clonNewCard.querySelector(".elements__image").src = urlValue;
+  clonNewCard.querySelector(".elements__location").textContent = locationValue;
+  clonNewCard
+    .querySelector(".elements__like")
+    .addEventListener("click", function (evt) {
+      evt.target.classList.toggle("elements__like-enabled");
+    });
 
   elements.prepend(clonNewCard);
 }
@@ -123,3 +127,6 @@ newCardsForm.addEventListener("submit", function (evt) {
 
   closeNewCards();
 });
+
+//Evento para dar like y dislke a tarjetas
+elements.query;

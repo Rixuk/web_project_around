@@ -46,10 +46,22 @@
   margin-left: auto;
   width: 21px;
   height: 19px;
+  display: block;
 }
 .elements__like:hover {
   cursor: pointer;
   opacity: 0.5;
+}
+.elements__like-enabled {
+  background-image: url(../images/Like-enabled.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: #fff;
+  border: none;
+  margin-left: auto;
+  width: 21px;
+  height: 19px;
 }
 @media (width < 880px) {
   .elements {
