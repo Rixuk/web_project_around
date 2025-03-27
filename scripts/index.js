@@ -15,6 +15,12 @@ const editNewCards = profile.querySelector(".profile__add-button");
 const newCardsClose = newCards.querySelector(".new-cards__close");
 const newCardsForm = newCards.querySelector(".new-cards__form");
 
+//Variable para popup de imagen
+const imagesPopup = document.querySelector(".popup-images");
+const closeImagePopup = imagesPopup.querySelector(".popup-images__close");
+const imagePopup = imagesPopup.querySelector(".popup-images__image");
+const imageLocation = imagesPopup.querySelector(".popup-images__location");
+
 const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
 
@@ -55,13 +61,19 @@ initCards.forEach(({ name, link }) => {
       evt.target.classList.toggle("elements__like-enabled");
     });
   clon
-    .querySelector(".elements__thrash")
+    .querySelector(".elements__trash")
     .addEventListener("click", function (evt) {
       evt.target.parentElement.remove();
     });
+  clon.querySelector(".elements__image").addEventListener("click", function () {
+    imagesPopup.classList.toggle("popup-images__opened");
+    imageLocation.textContent = name;
+    imagePopup.src = link;
+  });
   elements.appendChild(clon);
 });
 
+//Inician las funciones usadas para editar el perfil
 function showPopup() {
   popup.classList.toggle("popup__opened");
   const profileName = profile.querySelector("#profile__name");
@@ -87,7 +99,9 @@ function handleProfileFormSubmit(evt) {
 function closePopup() {
   popup.classList.toggle("popup__opened");
 }
+//Finalizan las funciones usadas para editar el perfil
 
+//Inician las funciones para agregar nuevas tarjetas
 function showNewCards() {
   newCards.classList.toggle("new-cards__opened");
 }
@@ -103,16 +117,31 @@ function addNewCard(urlValue, locationValue) {
       evt.target.classList.toggle("elements__like-enabled");
     });
   clonNewCard
-    .querySelector(".elements__thrash")
+    .querySelector(".elements__trash")
     .addEventListener("click", function (evt) {
       evt.target.parentElement.remove();
     });
+  clonNewCard
+    .querySelector(".elements__image")
+    .addEventListener("click", function () {
+      imagesPopup.classList.toggle("popup-images__opened");
+      imageLocation.textContent = locationValue;
+      imagePopup.src = urlValue;
+    });
   elements.prepend(clonNewCard);
 }
+
 function closeNewCards() {
   newCards.classList.toggle("new-cards__opened");
 }
+//Finalizan las funciones para agregar nuevas tarjetas
 
+//Función para cerrar cerrar la imagen grande
+function closePopupImage() {
+  imagesPopup.classList.toggle("popup-images__opened");
+  imagePopup.src = "";
+  imageLocation.src = "";
+}
 //Eventos para edición de perfil
 editProfile.addEventListener("click", showPopup);
 popupClose.addEventListener("click", closePopup);
@@ -135,3 +164,6 @@ newCardsForm.addEventListener("submit", function (evt) {
 
   closeNewCards();
 });
+
+//Evento para cerrar imagen más grande
+closeImagePopup.addEventListener("click", closePopupImage);

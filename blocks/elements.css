@@ -21,6 +21,10 @@
   object-fit: fill;
   border-radius: 10px 10px 0 0;
 }
+.elements__image:hover {
+  cursor: pointer;
+  filter: brightness(0.5);
+}
 .elements__info {
   color: #000;
   padding-top: 25px;
@@ -64,7 +68,7 @@
   width: 21px;
   height: 19px;
 }
-.elements__thrash {
+.elements__trash {
   background-image: url(../images/Trash.png);
   position: absolute;
   top: 18px;
@@ -72,7 +76,7 @@
   width: 18px;
   height: 19px;
 }
-.elements__thrash:hover {
+.elements__trash:hover {
   cursor: pointer;
   opacity: 0.5;
 }
