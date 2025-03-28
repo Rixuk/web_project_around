@@ -54,6 +54,7 @@ const initCards = [
 initCards.forEach(({ name, link }) => {
   const clon = elementsTemplate.content.cloneNode(true);
   clon.querySelector(".elements__image").src = link;
+  clon.querySelector(".elements__image").alt = name;
   clon.querySelector(".elements__location").textContent = name;
   clon
     .querySelector(".elements__like")
@@ -110,6 +111,7 @@ function showNewCards() {
 function addNewCard(urlValue, locationValue) {
   const clonNewCard = elementsTemplate.content.cloneNode(true);
   clonNewCard.querySelector(".elements__image").src = urlValue;
+  clonNewCard.querySelector(".elements__image").alt = locationValue;
   clonNewCard.querySelector(".elements__location").textContent = locationValue;
   clonNewCard
     .querySelector(".elements__like")
