@@ -35,11 +35,11 @@
           <div class="profile__add">
             <button class="profile__add-button">+</button>
           </div>
-          <div class="popup">
-            <div class="popup__container">
+          <div class="popups" id="popup-profile">
+            <div class="popup__window">
               <h2 class="popup__title popup__style">Editar perfil</h2>
               <form class="popup__form">
-                <fieldset class="popup__info">
+                <fieldset class="popup__fieldset">
                   <input
                     type="text"
                     placeholder="Nombre"
@@ -57,35 +57,32 @@
                   </button>
                 </fieldset>
               </form>
-              <button class="popup__close"></button>
+              <button class="popups__close"></button>
             </div>
           </div>
-          <div class="new-cards">
-            <div class="new-cards__window">
-              <h2 class="new-cards__title new-cards__style">Nuevo lugar</h2>
-              <form class="new-cards__form">
-                <fieldset class="new-cards__info">
+          <div class="popups" id="popup-cards">
+            <div class="popup__window">
+              <h2 class="popup__title popup__style">Nuevo lugar</h2>
+              <form class="popup__form">
+                <fieldset class="popup__fieldset">
                   <input
                     type="text"
                     placeholder="Título"
-                    class="new-cards__name new-cards__style"
+                    class="popup__name popup__style"
                     id="new-cards__name"
                   />
                   <input
                     type="text"
                     placeholder="Enlace a la imagen"
-                    class="new-cards__link new-cards__style"
+                    class="popup__aboutme popup__style"
                     id="new-cards__link"
                   />
-                  <button
-                    type="submit"
-                    class="new-cards__save new-cards__style"
-                  >
+                  <button type="submit" class="popup__save popup__style">
                     Crear
                   </button>
                 </fieldset>
               </form>
-              <button class="new-cards__close"></button>
+              <button class="popups__close"></button>
             </div>
           </div>
         </section>
@@ -111,11 +108,11 @@
     </template>
 
     <!--Popup windows zone-->
-    <div class="popup-images">
-      <div class="popup-images__container">
-        <img class="popup-images__image" src="" alt="" />
-        <button class="popup-images__close"></button>
-        <p class="popup-images__location"></p>
+    <div class="popups" id="popup-image">
+      <div id="popup-images__container">
+        <img id="popup-images__image" src="" alt="" />
+        <button class="popups__close"></button>
+        <p id="popup-images__location"></p>
       </div>
     </div>
 

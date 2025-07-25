@@ -1,29 +1,28 @@
 const content = document.querySelector(".content");
-
-//Variables usadas para el botón de editar el perfil
 const profile = content.querySelector(".profile");
-const editProfile = profile.querySelector(".profile__button");
 
-//Variables usadas para la ventana emergente de editar perfil
-const popup = content.querySelector(".popup");
-const popupForm = popup.querySelector(".popup__form");
-const popupClose = popup.querySelector(".popup__close");
+//Edit Profile variables
+const profilePopup = profile.querySelector("#popup-profile");
+const profileButton = profile.querySelector(".profile__button");
 
-//Variables usadas para la ventana emergente de agregar nuevo lugar
-const newCards = content.querySelector(".new-cards");
-const editNewCards = profile.querySelector(".profile__add-button");
-const newCardsClose = newCards.querySelector(".new-cards__close");
-const newCardsForm = newCards.querySelector(".new-cards__form");
+//New Cards variables
+const cardsPopup = profile.querySelector("#popup-cards");
+const addButton = profile.querySelector(".profile__add-button");
 
-//Variable para popup de imagen
-const imagesPopup = document.querySelector(".popup-images");
-const closeImagePopup = imagesPopup.querySelector(".popup-images__close");
-const imagePopup = imagesPopup.querySelector(".popup-images__image");
-const imageLocation = imagesPopup.querySelector(".popup-images__location");
+//General Popups variables
+const popups = document.querySelector(".popups");
+const popupsClose = document.querySelectorAll(".popups__close");
 
+//Image Popup variables
+const popupImage = document.querySelector("#popup-image");
+const imagePopup = popupImage.querySelector("#popup-images__image");
+const imageLocation = popupImage.querySelector("#popup-images__location");
+
+//Elements variables
 const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
 
+/* -------------------Object and foreach to add cards------------------ */
 const initCards = [
   {
     name: "Valle de Yosemite",
@@ -67,20 +66,21 @@ initCards.forEach(({ name, link }) => {
       evt.target.parentElement.remove();
     });
   clon.querySelector(".elements__image").addEventListener("click", function () {
-    imagesPopup.classList.toggle("popup-images__opened");
+    popupImage.classList.toggle("popup__opened");
     imageLocation.textContent = name;
     imagePopup.src = link;
   });
   elements.appendChild(clon);
 });
+/* ---------------------------------------------------------------------*/
 
-//Inician las funciones usadas para editar el perfil
+/* ----------------------Edit profile Functions------------------------ */
 function showPopup() {
-  popup.classList.toggle("popup__opened");
+  profilePopup.classList.toggle("popup__opened");
   const profileName = profile.querySelector("#profile__name");
   const profileJob = profile.querySelector("#profile__profession");
-  const nameInput = popup.querySelector("#popup__name");
-  const jobInput = popup.querySelector("#popup__job");
+  const nameInput = profilePopup.querySelector("#popup__name");
+  const jobInput = profilePopup.querySelector("#popup__job");
 
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent.trim();
@@ -89,25 +89,17 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const profileName = profile.querySelector("#profile__name");
   const profileJob = profile.querySelector("#profile__profession");
-  const nameInput = popup.querySelector("#popup__name");
-  const jobInput = popup.querySelector("#popup__job");
+  const nameInput = profilePopup.querySelector("#popup__name");
+  const jobInput = profilePopup.querySelector("#popup__job");
 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  closePopup();
+  closePopup(evt);
 }
-function closePopup() {
-  popup.classList.toggle("popup__opened");
-}
-//Finalizan las funciones usadas para editar el perfil
+/* -------------------------------------------------------------------- */
 
-//Inician las funciones para agregar nuevas tarjetas
-function showNewCards() {
-  newCards.classList.toggle("new-cards__opened");
-}
-
-//Función que se llamará cada que se vaya a agregar una nueva tarjeta.
+/* ----------------------New Cards Popup Function----------------------*/
 function addNewCard(urlValue, locationValue) {
   const clonNewCard = elementsTemplate.content.cloneNode(true);
   clonNewCard.querySelector(".elements__image").src = urlValue;
@@ -126,46 +118,54 @@ function addNewCard(urlValue, locationValue) {
   clonNewCard
     .querySelector(".elements__image")
     .addEventListener("click", function () {
-      imagesPopup.classList.toggle("popup-images__opened");
+      popupImage.classList.toggle("popup__opened");
       imageLocation.textContent = locationValue;
       imagePopup.src = urlValue;
     });
   elements.prepend(clonNewCard);
 }
+/*----------------------------------------------------------------------*/
 
-function closeNewCards() {
-  newCards.classList.toggle("new-cards__opened");
-}
-//Finalizan las funciones para agregar nuevas tarjetas
+/*---------------------Edit Profile Event Listeners---------------------*/
+profileButton.addEventListener("click", showPopup);
+profilePopup.addEventListener("submit", handleProfileFormSubmit);
+/*----------------------------------------------------------------------*/
 
-//Función para cerrar cerrar la imagen grande
-function closePopupImage() {
-  imagesPopup.classList.toggle("popup-images__opened");
-  imagePopup.src = "";
-  imageLocation.src = "";
-}
-//Eventos para edición de perfil
-editProfile.addEventListener("click", showPopup);
-popupClose.addEventListener("click", closePopup);
-popupForm.addEventListener("submit", handleProfileFormSubmit);
-
-//Eventos para abrir ventana de agregar nueva tarjeta
-editNewCards.addEventListener("click", showNewCards);
-newCardsClose.addEventListener("click", closeNewCards);
-
-//Evento con función para agregar nueva tarjeta
-newCardsForm.addEventListener("submit", function (evt) {
+/*---------------------New Cards Event Listeners------------------------*/
+addButton.addEventListener("click", () => {
+  cardsPopup.classList.toggle("popup__opened");
+});
+cardsPopup.addEventListener("submit", function (evt) {
   evt.preventDefault();
-  const urlLink = document.querySelector(".new-cards__link");
-  const newCardName = document.querySelector(".new-cards__name");
+  const urlLink = document.querySelector("#new-cards__link");
+  const newCardName = document.querySelector("#new-cards__name");
 
   addNewCard(urlLink.value, newCardName.value);
 
   urlLink.value = "";
   newCardName.value = "";
 
-  closeNewCards();
+  closePopup(evt);
 });
+/*----------------------------------------------------------------------*/
 
-//Evento para cerrar imagen más grande
-closeImagePopup.addEventListener("click", closePopupImage);
+/*---------------------Close Popups Functions---------------------------*/
+function closePopup(evt) {
+  const popup = evt.target.closest(".popups");
+  popup.classList.toggle("popup__opened");
+}
+popupsClose.forEach((popupClose) => {
+  popupClose.addEventListener("click", (evt) => {
+    const popup = evt.target.closest(".popups");
+    const urlLink = document.querySelector("#new-cards__link");
+    const newCardName = document.querySelector("#new-cards__name");
+
+    urlLink.value = "";
+    newCardName.value = "";
+    imagePopup.src = "";
+    imageLocation.src = "";
+
+    popup.classList.toggle("popup__opened");
+  });
+});
+/*----------------------------------------------------------------------*/
