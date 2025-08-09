@@ -10,8 +10,14 @@ const cardsPopup = profile.querySelector("#popup-cards");
 const addButton = profile.querySelector(".profile__add-button");
 
 //General Popups variables
-const popups = document.querySelector(".popups");
-const popupsClose = document.querySelectorAll(".popups__close");
+const popups = Array.from(document.querySelectorAll(".popups"));
+
+//Validation OBJECT
+/*const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".form__inputs",
+  submitButtonSelector: ".popup__save",
+};*/
 
 //Image Popup variables
 const popupImage = document.querySelector("#popup-image");
@@ -77,6 +83,7 @@ initCards.forEach(({ name, link }) => {
 /* ----------------------Edit profile Functions------------------------ */
 function showPopup() {
   profilePopup.classList.toggle("popup__opened");
+  profilePopup.focus();
   const profileName = profile.querySelector("#profile__name");
   const profileJob = profile.querySelector("#profile__profession");
   const nameInput = profilePopup.querySelector("#popup__name");
@@ -150,11 +157,42 @@ cardsPopup.addEventListener("submit", function (evt) {
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
-function closePopup(evt) {
+const resetErrorMessages = (popup) => {
+  const errorMessages = Array.from(
+    popup.querySelectorAll(".form__inputs-error_active")
+  );
+  const inputsError = Array.from(popup.querySelectorAll(".form__inputs"));
+  errorMessages.forEach((error) => {
+    error.textContent = "";
+  });
+  inputsError.forEach((iError) => {
+    iError.classList.remove("form__inputs_type_error");
+  });
+};
+const resetCardsInputs = () => {
+  const urlLink = document.querySelector("#new-cards__link");
+  const newCardName = document.querySelector("#new-cards__name");
+  urlLink.value = "";
+  newCardName.value = "";
+  imagePopup.src = "";
+  imageLocation.src = "";
+};
+/*const handleEsc = (popup) => {
+  document.addEventListener("keyup", (evnt) => {
+    if (evnt.key === "Escape") {
+      popup.classList.remove("popup__opened");
+    }
+  });
+};*/
+
+/*function closePopup(evt) {
   const popup = evt.target.closest(".popups");
   popup.classList.toggle("popup__opened");
-}
-popupsClose.forEach((popupClose) => {
+  resetErrorMessages(popup);
+  document.removeEventListener("keyup", handleEsc);
+}*/
+
+/*popupsClose.forEach((popupClose) => {
   popupClose.addEventListener("click", (evt) => {
     const popup = evt.target.closest(".popups");
     const urlLink = document.querySelector("#new-cards__link");
@@ -167,5 +205,34 @@ popupsClose.forEach((popupClose) => {
 
     popup.classList.toggle("popup__opened");
   });
+  document.removeEventListener("keyup", handleEsc);
+});*/
+
+const closeEventListeners = (closestPopup) => {
+  const closeButton = closestPopup.querySelector(".popups__close");
+  const closeOverlay = closestPopup.querySelector(".popup__overlay");
+
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      closestPopup.classList.remove("popup__opened");
+      resetErrorMessages(closestPopup);
+      resetCardsInputs();
+    }
+  });
+  closeOverlay.addEventListener("click", () => {
+    closestPopup.classList.remove("popup__opened");
+    resetErrorMessages(closestPopup);
+    resetCardsInputs();
+  });
+  closeButton.addEventListener("click", () => {
+    closestPopup.classList.remove("popup__opened");
+    resetErrorMessages(closestPopup);
+    resetCardsInputs();
+  });
+};
+
+popups.forEach((popup) => {
+  closeEventListeners(popup);
 });
+
 /*----------------------------------------------------------------------*/

@@ -36,22 +36,37 @@
             <button class="profile__add-button">+</button>
           </div>
           <div class="popups" id="popup-profile">
+            <div class="popup__overlay"></div>
             <div class="popup__window">
               <h2 class="popup__title popup__style">Editar perfil</h2>
-              <form class="popup__form">
+              <form class="popup__form" novalidate>
                 <fieldset class="popup__fieldset">
                   <input
                     type="text"
                     placeholder="Nombre"
-                    class="popup__name popup__style"
+                    class="popup__name popup__style form__inputs"
                     id="popup__name"
+                    required
+                    minlength="2"
+                    maxlength="40"
                   />
+                  <span
+                    class="form__inputs-error_active"
+                    id="popup__name-error"
+                  ></span>
                   <input
                     type="text"
                     placeholder="Acerca de mí"
-                    class="popup__aboutme popup__style"
+                    class="popup__aboutme popup__style form__inputs"
                     id="popup__job"
+                    required
+                    minlength="2"
+                    maxlength="200"
                   />
+                  <span
+                    class="form__inputs-error_active"
+                    id="popup__job-error"
+                  ></span>
                   <button type="submit" class="popup__save popup__style">
                     Guardar
                   </button>
@@ -61,22 +76,35 @@
             </div>
           </div>
           <div class="popups" id="popup-cards">
+            <div class="popup__overlay"></div>
             <div class="popup__window">
               <h2 class="popup__title popup__style">Nuevo lugar</h2>
-              <form class="popup__form">
+              <form class="popup__form" novalidate>
                 <fieldset class="popup__fieldset">
                   <input
                     type="text"
                     placeholder="Título"
-                    class="popup__name popup__style"
+                    class="popup__name popup__style form__inputs"
                     id="new-cards__name"
+                    required
+                    minlength="2"
+                    maxlength="30"
                   />
+                  <span
+                    class="form__inputs-error_active"
+                    id="new-cards__name-error"
+                  ></span>
                   <input
-                    type="text"
+                    type="url"
                     placeholder="Enlace a la imagen"
-                    class="popup__aboutme popup__style"
+                    class="popup__aboutme popup__style form__inputs"
                     id="new-cards__link"
+                    required
                   />
+                  <span
+                    class="form__inputs-error_active"
+                    id="new-cards__link-error"
+                  ></span>
                   <button type="submit" class="popup__save popup__style">
                     Crear
                   </button>
@@ -109,6 +137,7 @@
 
     <!--Popup windows zone-->
     <div class="popups" id="popup-image">
+      <div class="popup__overlay"></div>
       <div id="popup-images__container">
         <img id="popup-images__image" src="" alt="" />
         <button class="popups__close"></button>
@@ -118,5 +147,6 @@
 
     <!--Finish templates zone-->
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
