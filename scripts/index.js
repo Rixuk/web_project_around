@@ -61,17 +61,51 @@ class Card {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._element = this._getTemplate();
+    this._clon = this._getTemplate();
   }
   _getTemplate(){
     const clon = document.querySelector(this._templateSelector).content.cloneNode(true);
     return clon;
   }
-  _eventListeners(){
-    this._element.querySelector(".elements__like").addEventListener("click", (evt) => {
-      
-    });
+  _likeButton(){
+    this._clon.querySelector(".elements__like").addEventListener("click", (evt) => {
+      evt.target.classList.toggle("elements__like-enabled");
+    })};
+  _trashButton(){
+    this._clon.querySelector(".elements__trash").addEventListener("click", (evt) => {
+      evt.target.parentElement.remove();
+    })};
+  _popupCard(){
+    this._clon.querySelector(".elements__image").addEventListener("click", () => {
+      popupImage.classList.toggle("popup__opened");
+      imageLocation.textContent = this._name;
+      imagePopup.src = this._link;
+    })};
+  generateCard(){
+    this._element = this._clon;
+    this._clon.querySelector(".elements__image").src = this._link;
+    this._clon.querySelector(".elements__image").alt = this._name;
+    this._clon.querySelector(".elements__location").textContent = this._name;
+    this._likeButton();
+    this._trashButton();
+    this._popupCard();
+    return this._element;
+  }
 }
+
+class FormValidator {
+  constructor(formObject, formElement){
+    this._formObject = formObject;
+    this._formElement = formElement;
+  }
+}
+
+
+const cardInstances = initCards.map(item => new Card(item, "#elements__template"));
+cardInstances.forEach(card => {
+  elements.append(card.generateCard());
+});
+
 
 
 /* ---------------------------------------------------------------------*/
@@ -177,7 +211,7 @@ cardsPopup.addEventListener("submit", function (evt) {
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
-/*const resetErrorMessages = (popup) => {
+const resetErrorMessages = (popup) => {
   const errorMessages = Array.from(
     popup.querySelectorAll(".form__inputs-error_active")
   );
@@ -196,23 +230,23 @@ const resetCardsInputs = () => {
   newCardName.value = "";
   imagePopup.src = "";
   imageLocation.src = "";
-};*/
-/*const handleEsc = (popup) => {
+};
+const handleEsc = (popup) => {
   document.addEventListener("keyup", (evnt) => {
     if (evnt.key === "Escape") {
       popup.classList.remove("popup__opened");
     }
   });
-};*/
+};
 
-/*function closePopup(evt) {
+function closePopup(evt) {
   const popup = evt.target.closest(".popups");
   popup.classList.toggle("popup__opened");
   resetErrorMessages(popup);
   document.removeEventListener("keyup", handleEsc);
-}*/
+}
 
-/*popupsClose.forEach((popupClose) => {
+popupsClose.forEach((popupClose) => {
   popupClose.addEventListener("click", (evt) => {
     const popup = evt.target.closest(".popups");
     const urlLink = document.querySelector("#new-cards__link");
@@ -226,9 +260,9 @@ const resetCardsInputs = () => {
     popup.classList.toggle("popup__opened");
   });
   document.removeEventListener("keyup", handleEsc);
-});*/
+});
 
-/*const closeEventListeners = (closestPopup) => {
+const closeEventListeners = (closestPopup) => {
   const closeButton = closestPopup.querySelector(".popups__close");
   const closeOverlay = closestPopup.querySelector(".popup__overlay");
 
@@ -253,6 +287,6 @@ const resetCardsInputs = () => {
 
 popups.forEach((popup) => {
   closeEventListeners(popup);
-});*/
+});
 
 /*----------------------------------------------------------------------*/
