@@ -19,6 +19,8 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
+/*-----------------------------------------------------------------------------------*/
+
 const setEventListeners = (formElement) => {
   const formInputs = Array.from(formElement.querySelectorAll(".form__inputs"));
   const buttonElement = formElement.querySelector(".popup__save");
@@ -43,7 +45,7 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.classList.add("form__submit_inactive");
   } else {
     buttonElement.classList.remove("form__submit_inactive");
-  }
+  }s
 };
 
 const enableValidation = () => {

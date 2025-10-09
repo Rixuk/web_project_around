@@ -13,11 +13,14 @@ const addButton = profile.querySelector(".profile__add-button");
 const popups = Array.from(document.querySelectorAll(".popups"));
 
 //Validation OBJECT
-/*const validationConfig = {
+const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".form__inputs",
   submitButtonSelector: ".popup__save",
-};*/
+  inactiveButtonClass: "form__submit_inactive",
+  inputErrorClass: "form__inputs_type_error",
+  errorClass: "popup__error",
+};
 
 //Image Popup variables
 const popupImage = document.querySelector("#popup-image");
@@ -94,10 +97,49 @@ class Card {
 }
 
 class FormValidator {
-  constructor(formObject, formElement){
-    this._formObject = formObject;
+  constructor(configObject, formElement){
+    this._configObject = configObject;
     this._formElement = formElement;
   }
+
+  _checkInputValidity(inputElement){
+    const errorElement = this._formElement.querySelector(`#${inputElement.id}-error`);
+  if (!inputElement.validity.valid) {
+    errorElement.textContent = inputElement.validationMessage;
+    inputElement.classList.add(this._config.inputErrorClass);
+  } else {
+    errorElement.textContent = "";
+    inputElement.classList.remove(this._config.inputErrorClass);
+  }
+  }
+  _toggleButtonState() {
+  const buttonElement = this._formElement.querySelector(this._config.submitButtonSelector);
+  const inputs = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
+  const isFormValid = inputs.every(input => input.validity.valid);
+
+  if (isFormValid) {
+    buttonElement.classList.remove(this._config.inactiveButtonClass);
+    buttonElement.disabled = false;
+  } else {
+    buttonElement.classList.add(this._config.inactiveButtonClass);
+    buttonElement.disabled = true;
+  }
+  }
+  _setEventListeners() {
+  const inputs = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
+
+  inputs.forEach(inputElement => {
+    inputElement.addEventListener("input", () => {
+      this._checkInputValidity(inputElement);
+      this._toggleButtonState();
+    });
+  });
+
+  this._toggleButtonState(); // estado inicial del botón
+  }
+  enableValidation() {
+  this._setEventListeners();
+}
 }
 
 
