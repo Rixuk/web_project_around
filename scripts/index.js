@@ -284,7 +284,7 @@ cardsPopup.addEventListener("submit", function (evt) {
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
-const resetErrorMessages = (popup) => {
+/*const resetErrorMessages = (popup) => {
   const errorMessages = Array.from(
     popup.querySelectorAll(".form__inputs-error_active")
   );
@@ -361,5 +361,5 @@ const closeEventListeners = (closestPopup) => {
 popups.forEach((popup) => {
   closeEventListeners(popup);
 });
-
+*/
 /*----------------------------------------------------------------------*/

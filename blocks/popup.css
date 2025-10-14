@@ -109,7 +109,6 @@
 .form__inputs-error_active {
   color: red;
   font-size: 12px;
-  display: none;
 }
 .popup__error {
   display: block;
