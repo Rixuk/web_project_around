@@ -31,6 +31,9 @@ const imageLocation = popupImage.querySelector("#popup-images__location");
 const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
 
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 /* -------------------Object and foreach to add cards------------------ */
 const initCards = [
   {
@@ -59,117 +62,9 @@ const initCards = [
   },
 ];
 
-class Card {
-  constructor(data, templateSelector) {
-    this._name = data.name;
-    this._link = data.link;
-    this._templateSelector = templateSelector;
-    this._clon = this._getTemplate();
-  }
-  _getTemplate() {
-    const clon = document
-      .querySelector(this._templateSelector)
-      .content.cloneNode(true);
-    return clon;
-  }
-  _likeButton() {
-    this._clon
-      .querySelector(".elements__like")
-      .addEventListener("click", (evt) => {
-        evt.target.classList.toggle("elements__like-enabled");
-      });
-  }
-  _trashButton() {
-    this._clon
-      .querySelector(".elements__trash")
-      .addEventListener("click", (evt) => {
-        evt.target.parentElement.remove();
-      });
-  }
-  _popupCard() {
-    this._clon
-      .querySelector(".elements__image")
-      .addEventListener("click", () => {
-        popupImage.classList.toggle("popup__opened");
-        imageLocation.textContent = this._name;
-        imagePopup.src = this._link;
-      });
-  }
-  generateCard() {
-    this._element = this._clon;
-    this._clon.querySelector(".elements__image").src = this._link;
-    this._clon.querySelector(".elements__image").alt = this._name;
-    this._clon.querySelector(".elements__location").textContent = this._name;
-    this._likeButton();
-    this._trashButton();
-    this._popupCard();
-    return this._element;
-  }
-}
-
 //configuracion y forma
 //kickoff un methodo que inicializa cosas y genera una reaccion cadena
-class FormValidator {
-  constructor(configObject) {
-    this._configObject = configObject;
-  }
 
-  _toggleButtonState(formElement, inputs) {
-    const buttonElement = formElement.querySelector(
-      this._configObject.submitButtonSelector
-    );
-
-    const isFormValid = inputs.every((input) => input.validity.valid);
-
-    if (isFormValid) {
-      buttonElement.classList.remove(this._configObject.inactiveButtonClass);
-      buttonElement.disabled = false;
-    } else {
-      buttonElement.classList.add(this._configObject.inactiveButtonClass);
-      buttonElement.disabled = true;
-    }
-  }
-
-  _checkInputValidity(inputElement, formElement) {
-    const errorElement = formElement.querySelector(
-      `#${inputElement.id}-error`
-      //concatenar popup__name-error
-    );
-    if (!inputElement.validity.valid) {
-      errorElement.textContent = inputElement.validationMessage;
-      inputElement.classList.add(this._configObject.inputErrorClass);
-    } else {
-      errorElement.textContent = "";
-      inputElement.classList.remove(this._configObject.inputErrorClass);
-    }
-  }
-
-  _setEventListeners() {
-    this._formElement = document.querySelectorAll(
-      this._configObject.formSelector
-    );
-    this._formElements = Array.from(this._formElement);
-    this._formElements.forEach((formElement) => {
-      const inputs = Array.from(
-        formElement.querySelectorAll(this._configObject.inputSelector)
-      );
-
-      inputs.forEach((inputElement) => {
-        inputElement.addEventListener("input", () => {
-          this._checkInputValidity(inputElement, formElement);
-          this._toggleButtonState(formElement, inputs);
-        });
-      });
-    });
-
-    //this._toggleButtonState(); // estado inicial del botón
-  }
-  //kickoff el publico por fuera
-
-  enableValidation() {
-    this._setEventListeners();
-  }
-}
 
 const valida = new FormValidator(validationConfig);
 valida.enableValidation();
