@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 
@@ -31,9 +34,6 @@ const imageLocation = popupImage.querySelector("#popup-images__location");
 const elements = content.querySelector(".elements");
 const elementsTemplate = document.querySelector("#elements__template");
 
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-
 /* -------------------Object and foreach to add cards------------------ */
 const initCards = [
   {
@@ -65,7 +65,6 @@ const initCards = [
 //configuracion y forma
 //kickoff un methodo que inicializa cosas y genera una reaccion cadena
 
-
 const valida = new FormValidator(validationConfig);
 valida.enableValidation();
 
@@ -75,31 +74,6 @@ const cardInstances = initCards.map(
 cardInstances.forEach((card) => {
   elements.append(card.generateCard());
 });
-
-/* ---------------------------------------------------------------------*/
-/*initCards.forEach(({ name, link }) => {
-  const clon = elementsTemplate.content.cloneNode(true);
-  clon.querySelector(".elements__image").src = link;
-  clon.querySelector(".elements__image").alt = name;
-  clon.querySelector(".elements__location").textContent = name;
-  clon
-    .querySelector(".elements__like")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("elements__like-enabled");
-    });
-  clon
-    .querySelector(".elements__trash")
-    .addEventListener("click", function (evt) {
-      evt.target.parentElement.remove();
-    });
-  clon.querySelector(".elements__image").addEventListener("click", function () {
-    popupImage.classList.toggle("popup__opened");
-    imageLocation.textContent = name;
-    imagePopup.src = link;
-  });
-  elements.appendChild(clon);
-});*/
-/* ---------------------------------------------------------------------*/
 
 /* ----------------------Edit profile Functions------------------------ */
 /*function showPopup() {
