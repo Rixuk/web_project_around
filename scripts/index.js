@@ -14,6 +14,7 @@ const addButton = profile.querySelector(".profile__add-button");
 
 //General Popups variables
 const popups = Array.from(document.querySelectorAll(".popups"));
+const popupsClose = Array.from(document.querySelectorAll(".popups__close"));
 
 //Validation OBJECT
 const validationConfig = {
@@ -69,14 +70,14 @@ const valida = new FormValidator(validationConfig);
 valida.enableValidation();
 
 const cardInstances = initCards.map(
-  (item) => new Card(item, "#elements__template")
+  (item) => new Card(item, "#elements__template", popupImage)
 );
 cardInstances.forEach((card) => {
   elements.append(card.generateCard());
 });
 
 /* ----------------------Edit profile Functions------------------------ */
-/*function showPopup() {
+function showPopup() {
   profilePopup.classList.toggle("popup__opened");
   profilePopup.focus();
   const profileName = profile.querySelector("#profile__name");
@@ -98,44 +99,28 @@ function handleProfileFormSubmit(evt) {
   profileJob.textContent = jobInput.value;
 
   closePopup(evt);
-}*/
+}
 /* -------------------------------------------------------------------- */
 
 /* ----------------------New Cards Popup Function----------------------*/
-/*function addNewCard(urlValue, locationValue) {
-  const clonNewCard = elementsTemplate.content.cloneNode(true);
-  clonNewCard.querySelector(".elements__image").src = urlValue;
-  clonNewCard.querySelector(".elements__image").alt = locationValue;
-  clonNewCard.querySelector(".elements__location").textContent = locationValue;
-  clonNewCard
-    .querySelector(".elements__like")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("elements__like-enabled");
-    });
-  clonNewCard
-    .querySelector(".elements__trash")
-    .addEventListener("click", function (evt) {
-      evt.target.parentElement.remove();
-    });
-  clonNewCard
-    .querySelector(".elements__image")
-    .addEventListener("click", function () {
-      popupImage.classList.toggle("popup__opened");
-      imageLocation.textContent = locationValue;
-      imagePopup.src = urlValue;
-    });
-  elements.prepend(clonNewCard);
-}*/
+// utils
+function addNewCard(urlValue, locationValue) {
+  const data = {
+    link: urlValue,
+    name: locationValue,
+  };
+  const card = new Card(data, "#elements__template", popupImage);
+  elements.append(card.generateCard());
+}
 /*----------------------------------------------------------------------*/
 
 /*---------------------Edit Profile Event Listeners---------------------*/
-/*profileButton.addEventListener("click", showPopup);
+profileButton.addEventListener("click", showPopup);
 profilePopup.addEventListener("submit", handleProfileFormSubmit);
-*/
 /*----------------------------------------------------------------------*/
 
 /*---------------------New Cards Event Listeners------------------------*/
-/*addButton.addEventListener("click", () => {
+addButton.addEventListener("click", () => {
   cardsPopup.classList.toggle("popup__opened");
 });
 cardsPopup.addEventListener("submit", function (evt) {
@@ -149,11 +134,11 @@ cardsPopup.addEventListener("submit", function (evt) {
   newCardName.value = "";
 
   closePopup(evt);
-});*/
+});
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
-/*const resetErrorMessages = (popup) => {
+const resetErrorMessages = (popup) => {
   const errorMessages = Array.from(
     popup.querySelectorAll(".form__inputs-error_active")
   );
@@ -230,5 +215,4 @@ const closeEventListeners = (closestPopup) => {
 popups.forEach((popup) => {
   closeEventListeners(popup);
 });
-*/
 /*----------------------------------------------------------------------*/

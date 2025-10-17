@@ -50,7 +50,9 @@ class FormValidator {
         });
       });
     });
-
+  }
+  _resetForm() {
+    this._formElements.reset();
   }
   enableValidation() {
     this._setEventListeners();

@@ -1,9 +1,10 @@
 class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, popupImage) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._clon = this._getTemplate();
+    this._popupImage = popupImage;
   }
   _getTemplate() {
     const clon = document
@@ -29,7 +30,13 @@ class Card {
     this._clon
       .querySelector(".elements__image")
       .addEventListener("click", () => {
-        popupImage.classList.toggle("popup__opened");
+        const imagePopup = this._popupImage.querySelector(
+          "#popup-images__image"
+        );
+        const imageLocation = this._popupImage.querySelector(
+          "#popup-images__location"
+        );
+        this._popupImage.classList.toggle("popup__opened");
         imageLocation.textContent = this._name;
         imagePopup.src = this._link;
       });
