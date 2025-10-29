@@ -1,0 +1,22 @@
+{
+  "name": "web_project_around",
+  "version": "1.0.0",
+  "description": "First json package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rixuk/web_project_around.git"
+  },
+  "keywords": [
+    "webproject"
+  ],
+  "author": "Rixuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rixuk/web_project_around/issues"
+  },
+  "homepage": "https://github.com/Rixuk/web_project_around#readme"
+}
