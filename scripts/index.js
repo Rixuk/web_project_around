@@ -4,8 +4,10 @@ import {
   showPopup,
   handleProfileFormSubmit,
   closePopup,
-  closeEventListeners, handleEsc
+  closeEventListeners,
+  handleEsc,
 } from "./utils.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
@@ -118,7 +120,6 @@ cardsPopup.addEventListener("submit", function (evt) {
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
-
 
 popupsClose.forEach((popupClose) => {
   popupClose.addEventListener("click", (evt) => {
