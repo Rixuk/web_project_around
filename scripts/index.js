@@ -80,6 +80,7 @@ valida.enableValidation();
 const cardInstances = initCards.map(
   (item) => new Card(item, "#elements__template", popupImage)
 );
+b;
 cardInstances.forEach((card) => {
   elements.append(card.generateCard());
 });
