@@ -15,10 +15,3 @@ export default class PopupWithImage extends Popup {
   }
   //.open( { name: "", link: "" })
 }
-
-const popupWithImage = new PopupWithImage("#popup-image");
-popupWithImage.setEventListeners();
-popupWithImage.open({
-  name: "Yosemite Valley",
-  link: "https://code.s3.yandex.net/web-code/yosemite.jpg",
-});

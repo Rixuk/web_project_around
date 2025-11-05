@@ -1,14 +1,3 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import {
-  showPopup,
-  handleProfileFormSubmit,
-  closePopup,
-  closeEventListeners,
-  handleEsc,
-} from "./utils.js";
-import PopupWithImage from "./PopupWithImage.js";
-
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 
@@ -22,17 +11,13 @@ const addButton = profile.querySelector(".profile__add-button");
 
 //General Popups variables
 const popups = Array.from(document.querySelectorAll(".popups"));
-const popupsClose = Array.from(document.querySelectorAll(".popups__close"));
 
 //Validation OBJECT
-const validationConfig = {
+/*const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".form__inputs",
   submitButtonSelector: ".popup__save",
-  inactiveButtonClass: "form__submit_inactive",
-  inputErrorClass: "form__inputs_type_error",
-  errorClass: "popup__error",
-};
+};*/
 
 //Image Popup variables
 const popupImage = document.querySelector("#popup-image");
@@ -71,29 +56,80 @@ const initCards = [
   },
 ];
 
-//configuracion y forma
-//kickoff un methodo que inicializa cosas y genera una reaccion cadena
-
-const valida = new FormValidator(validationConfig);
-valida.enableValidation();
-
-const cardInstances = initCards.map(
-  (item) => new Card(item, "#elements__template", popupImage)
-);
-b;
-cardInstances.forEach((card) => {
-  elements.append(card.generateCard());
+initCards.forEach(({ name, link }) => {
+  const clon = elementsTemplate.content.cloneNode(true);
+  clon.querySelector(".elements__image").src = link;
+  clon.querySelector(".elements__image").alt = name;
+  clon.querySelector(".elements__location").textContent = name;
+  clon
+    .querySelector(".elements__like")
+    .addEventListener("click", function (evt) {
+      evt.target.classList.toggle("elements__like-enabled");
+    });
+  clon
+    .querySelector(".elements__trash")
+    .addEventListener("click", function (evt) {
+      evt.target.parentElement.remove();
+    });
+  clon.querySelector(".elements__image").addEventListener("click", function () {
+    popupImage.classList.toggle("popup__opened");
+    imageLocation.textContent = name;
+    imagePopup.src = link;
+  });
+  elements.appendChild(clon);
 });
+/* ---------------------------------------------------------------------*/
+
+/* ----------------------Edit profile Functions------------------------ */
+function showPopup() {
+  profilePopup.classList.toggle("popup__opened");
+  profilePopup.focus();
+  const profileName = profile.querySelector("#profile__name");
+  const profileJob = profile.querySelector("#profile__profession");
+  const nameInput = profilePopup.querySelector("#popup__name");
+  const jobInput = profilePopup.querySelector("#popup__job");
+
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent.trim();
+}
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+  const profileName = profile.querySelector("#profile__name");
+  const profileJob = profile.querySelector("#profile__profession");
+  const nameInput = profilePopup.querySelector("#popup__name");
+  const jobInput = profilePopup.querySelector("#popup__job");
+
+  profileName.textContent = nameInput.value;
+  profileJob.textContent = jobInput.value;
+
+  closePopup(evt);
+}
+/* -------------------------------------------------------------------- */
 
 /* ----------------------New Cards Popup Function----------------------*/
-// utils
 function addNewCard(urlValue, locationValue) {
-  const data = {
-    link: urlValue,
-    name: locationValue,
-  };
-  const card = new Card(data, "#elements__template", popupImage);
-  elements.append(card.generateCard());
+  const clonNewCard = elementsTemplate.content.cloneNode(true);
+  clonNewCard.querySelector(".elements__image").src = urlValue;
+  clonNewCard.querySelector(".elements__image").alt = locationValue;
+  clonNewCard.querySelector(".elements__location").textContent = locationValue;
+  clonNewCard
+    .querySelector(".elements__like")
+    .addEventListener("click", function (evt) {
+      evt.target.classList.toggle("elements__like-enabled");
+    });
+  clonNewCard
+    .querySelector(".elements__trash")
+    .addEventListener("click", function (evt) {
+      evt.target.parentElement.remove();
+    });
+  clonNewCard
+    .querySelector(".elements__image")
+    .addEventListener("click", function () {
+      popupImage.classList.toggle("popup__opened");
+      imageLocation.textContent = locationValue;
+      imagePopup.src = urlValue;
+    });
+  elements.prepend(clonNewCard);
 }
 /*----------------------------------------------------------------------*/
 
@@ -121,8 +157,35 @@ cardsPopup.addEventListener("submit", function (evt) {
 /*----------------------------------------------------------------------*/
 
 /*---------------------Close Popups Functions---------------------------*/
+const resetErrorMessages = (popup) => {
+  const errorMessages = Array.from(
+    popup.querySelectorAll(".form__inputs-error_active")
+  );
+  const inputsError = Array.from(popup.querySelectorAll(".form__inputs"));
+  errorMessages.forEach((error) => {
+    error.textContent = "";
+  });
+  inputsError.forEach((iError) => {
+    iError.classList.remove("form__inputs_type_error");
+  });
+};
 
-popupsClose.forEach((popupClose) => {
+/*const handleEsc = (popup) => {
+  document.addEventListener("keyup", (evnt) => {
+    if (evnt.key === "Escape") {
+      popup.classList.remove("popup__opened");
+    }
+  });
+};*/
+
+/*function closePopup(evt) {
+  const popup = evt.target.closest(".popups");
+  popup.classList.toggle("popup__opened");
+  resetErrorMessages(popup);
+  document.removeEventListener("keyup", handleEsc);
+}*/
+
+/*popupsClose.forEach((popupClose) => {
   popupClose.addEventListener("click", (evt) => {
     const popup = evt.target.closest(".popups");
     const urlLink = document.querySelector("#new-cards__link");
@@ -133,12 +196,31 @@ popupsClose.forEach((popupClose) => {
     imagePopup.src = "";
     imageLocation.src = "";
 
+    resetErrorMessages(popup);
+
     popup.classList.toggle("popup__opened");
   });
   document.removeEventListener("keyup", handleEsc);
-});
+});*/
+
+const closeEventListeners = (closestPopup) => {
+  const closeButton = closestPopup.querySelector(".popups__close");
+
+  closestPopup.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      closestPopup.classList.remove("popup__opened");
+    }
+  });
+  closestPopup.addEventListener("click", () => {
+    console.log("Cerrar ventana");
+  });
+  closeButton.addEventListener("click", () => {
+    console.log("Cerrar ventana");
+  });
+};
 
 popups.forEach((popup) => {
   closeEventListeners(popup);
 });
+
 /*----------------------------------------------------------------------*/
