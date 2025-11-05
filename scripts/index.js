@@ -1,3 +1,12 @@
+/*-----------------Importing classes------------------*/
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+import PopupWithForm from "./PopupWithForm.js";
+import PopupWithImage from "./PopupWithImage.js";
+import Section from "./Section.js";
+import UserInfo from "./UserInfo.js";
+
+/*-----------------------------------------------------*/
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 
@@ -56,28 +65,20 @@ const initCards = [
   },
 ];
 
-initCards.forEach(({ name, link }) => {
-  const clon = elementsTemplate.content.cloneNode(true);
-  clon.querySelector(".elements__image").src = link;
-  clon.querySelector(".elements__image").alt = name;
-  clon.querySelector(".elements__location").textContent = name;
-  clon
-    .querySelector(".elements__like")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("elements__like-enabled");
-    });
-  clon
-    .querySelector(".elements__trash")
-    .addEventListener("click", function (evt) {
-      evt.target.parentElement.remove();
-    });
-  clon.querySelector(".elements__image").addEventListener("click", function () {
-    popupImage.classList.toggle("popup__opened");
-    imageLocation.textContent = name;
-    imagePopup.src = link;
-  });
-  elements.appendChild(clon);
-});
+const cardList = new Section(
+  {
+    items: initCards,
+    renderer: (item) => {
+      const card = new Card(
+        item,
+        "#elements__template",
+        popupImages
+      ).generateCard();
+      cardList.addItem(card);
+    },
+  },
+  ".elements"
+)
 /* ---------------------------------------------------------------------*/
 
 /* ----------------------Edit profile Functions------------------------ */
