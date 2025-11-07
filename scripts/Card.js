@@ -26,7 +26,7 @@ export default class Card {
         evt.target.parentElement.remove();
       });
   }
-  _popupCard() {
+  /*_popupCard() {
     this._clon
       .querySelector(".elements__image")
       .addEventListener("click", () => {
@@ -40,7 +40,7 @@ export default class Card {
         imageLocation.textContent = this._name;
         imagePopup.src = this._link;
       });
-  }
+  }*/
   generateCard() {
     this._element = this._clon;
     this._clon.querySelector(".elements__image").src = this._link;
@@ -48,7 +48,11 @@ export default class Card {
     this._clon.querySelector(".elements__location").textContent = this._name;
     this._likeButton();
     this._trashButton();
-    this._popupCard();
+    this._clon
+      .querySelector(".elements__image")
+      .addEventListener("click", () => {
+        this._popupImage(this._name, this._link);
+      }); //this._popupCard();
     return this._element;
   }
 }
