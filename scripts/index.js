@@ -28,11 +28,6 @@ const popups = Array.from(document.querySelectorAll(".popups"));
   submitButtonSelector: ".popup__save",
 };*/
 
-//Image Popup variables
-const popupImage = document.querySelector("#popup-image");
-const imagePopup = popupImage.querySelector("#popup-images__image");
-const imageLocation = popupImage.querySelector("#popup-images__location");
-
 //Elements variables
 const elementsTemplate = document.querySelector("#elements__template");
 
@@ -72,6 +67,7 @@ const section = new Section(
     items: initCards,
     renderer: (item) => {
       const card = new Card(item, "#elements__template", (name, link) => {
+        console.log(name, link);
         popupWithImage.open({ name: name, link: link });
       });
       const cardElement = card.generateCard();
