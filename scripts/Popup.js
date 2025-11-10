@@ -5,10 +5,10 @@ export default class Popup {
     this._popupCloseButton = this._popup.querySelector(".popups__close");
     this._handleEscClose = this._handleEscClose.bind(this);
   }
-  open = () => {
+  open() {
     this._popup.classList.add("popup__opened");
     addEventListener("keydown", this._handleEscClose);
-  };
+  }
   close() {
     this._popup.classList.remove("popup__opened");
     removeEventListener("keydown", this._handleEscClose);
