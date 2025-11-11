@@ -26,21 +26,7 @@ export default class Card {
         evt.target.parentElement.remove();
       });
   }
-  /*_popupCard() {
-    this._clon
-      .querySelector(".elements__image")
-      .addEventListener("click", () => {
-        const imagePopup = this._popupImage.querySelector(
-          "#popup-images__image"
-        );
-        const imageLocation = this._popupImage.querySelector(
-          "#popup-images__location"
-        );
-        this._popupImage.classList.toggle("popup__opened");
-        imageLocation.textContent = this._name;
-        imagePopup.src = this._link;
-      });
-  }*/
+
   generateCard() {
     this._element = this._clon;
     this._clon.querySelector(".elements__image").src = this._link;
