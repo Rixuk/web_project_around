@@ -123,11 +123,12 @@
 @media (width < 880px) {
   .popup__window {
     width: 282px;
+    box-sizing: border-box;
   }
-  .popup__close {
-    width: 26px;
-    height: 26px;
+  .popups__close {
+    width: 40px;
+    height: 40px;
     right: 0;
-    top: -60px;
+    top: -50px;
   }
 }
