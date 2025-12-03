@@ -9,7 +9,7 @@ export default class Api {
     return Promise.reject(`Error: ${res.status}`);
   }
   getData() {
-    fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+    return fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
       headers: {
         authorization: this.token,
       },
