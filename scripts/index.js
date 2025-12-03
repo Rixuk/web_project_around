@@ -5,7 +5,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
 import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
-
+import Api from "./Api.js";
 /*-----------------------------------------------------*/
 const config = {
   formSelector: ".popup__form",
@@ -47,6 +47,19 @@ const initCards = [
   },
 ];
 
+const api = new Api("98ceb637-6af7-4ed6-84f7-0abd0d26da19");
+
+const userInfo = new UserInfo({
+  userName: ".profile__name",
+  userAbout: ".profile__profession",
+});
+// prettier-ignore
+api.getData().then((userData) => {
+    userInfo.setUserInfo({ name: userData.name, about: userData.about });
+  }).catch((err) => {
+    console.log(err);
+  });
+
 const section = new Section(
   {
     items: initCards,
@@ -65,11 +78,6 @@ section.renderElements();
 
 const popupWithImage = new PopupWithImage("#popup-image");
 popupWithImage.setEventListeners();
-
-const userInfo = new UserInfo({
-  userName: ".profile__name",
-  userAbout: ".profile__profession",
-});
 
 editButton.addEventListener("click", () => {
   const infoProfile = userInfo.getUserInfo();
