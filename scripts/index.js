@@ -52,10 +52,11 @@ const api = new Api("98ceb637-6af7-4ed6-84f7-0abd0d26da19");
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userAbout: ".profile__profession",
+  userAvatar: ".profile__avatar"
 });
-// prettier-ignore
+
 api.getData().then((userData) => {
-    userInfo.setUserInfo({ name: userData.name, about: userData.about });
+    userInfo.setUserInfo({ name: userData.name, about: userData.about , avatar: userData.avatar});
   }).catch((err) => {
     console.log(err);
   });

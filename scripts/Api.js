@@ -17,9 +17,6 @@ export default class Api {
       .then((data) => {
         return this._checkResponse(data);
       })
-      .then((userData) => {
-        return userData;
-      })
       .catch((err) => {
         console.log(err);
       });
