@@ -12,7 +12,7 @@ export default class Api {
   _checkError(error){
     console.log(error);
   }
-  _fetchData(path){
+  _fetchGet(path){
     return fetch(this.url + path, {
       headers: {
         authorization: this.token,
@@ -22,8 +22,23 @@ export default class Api {
       .catch(this._checkError);
   }
   getData() {
-    return this._fetchData("/users/me");
+    return this._fetchGet("/users/me");
   }
   getInitialCards(){
-    return this._fetchData("/cards");
-}}
+    return this._fetchGet("/cards");
+  }
+  patchUserInfo({ newName, newAbout }) {
+    return fetch(this.url + "/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: this.token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: newName,
+        about: newAbout
+      })
+    }).then(this._checkResponse)
+    .catch(this._checkError); 
+  }
+}

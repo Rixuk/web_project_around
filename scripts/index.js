@@ -68,15 +68,20 @@ editButton.addEventListener("click", () => {
   popupWithForm.open();
 });
 
+
 addButton.addEventListener("click", () => {
   popupNewCard.open();
 });
 
 const validatorForm = new FormValidator(config);
 validatorForm.enableValidation();
+
 const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
-  userInfo.setUserInfo({ name: data.name, about: data.about });
-  popupWithForm.close();
+  api.patchUserInfo({newName: data.name, newAbout: data.about})
+  .then(() => {
+    userInfo.setUserInfo({ name: data.name, about: data.about });
+    popupWithForm.close();
+  })
 });
 popupWithForm.setEventListeners();
 
