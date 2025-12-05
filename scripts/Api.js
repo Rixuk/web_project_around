@@ -1,5 +1,6 @@
 export default class Api {
-  constructor(token) {
+  constructor(token, baseUrl) {
+    this.url = baseUrl;
     this.token = token;
   }
   _checkResponse(res) {
@@ -8,17 +9,21 @@ export default class Api {
     }
     return Promise.reject(`Error: ${res.status}`);
   }
-  getData() {
-    return fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+  _checkError(error){
+    console.log(error);
+  }
+  _fetchData(path){
+    return fetch(this.url + path, {
       headers: {
         authorization: this.token,
       },
     })
-      .then((data) => {
-        return this._checkResponse(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(this._checkResponse)
+      .catch(this._checkError);
   }
-}
+  getData() {
+    return this._fetchData("/users/me");
+  }
+  getInitialCards(){
+    return this._fetchData("/cards");
+}}
