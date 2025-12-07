@@ -41,4 +41,18 @@ export default class Api {
     }).then(this._checkResponse)
     .catch(this._checkError); 
   }
+  newCard({ name, link }) {
+    return fetch(this.url + "/cards", {
+      method: "POST",
+      headers: {
+        authorization: this.token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+    }).then(this._checkResponse)
+    .catch(this._checkError); 
+  }
 }

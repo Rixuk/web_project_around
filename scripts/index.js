@@ -7,6 +7,8 @@ import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 import Api from "./Api.js";
 /*-----------------------------------------------------*/
+
+/* -------- CONFIGURACIÓN DE VALIDACIÓN -------- */
 const config = {
   formSelector: ".popup__form",
   inputSelector: ".form__inputs",
@@ -14,83 +16,119 @@ const config = {
   inactiveButtonClass: "popup__save-button_disabled",
   inputErrorClass: "form__inputs_type_error",
 };
+
+/* ------------------- DOM ELEMENTS ------------------ */
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 const editButton = profile.querySelector(".profile__button");
 const addButton = profile.querySelector(".profile__add-button");
 
-/* -------------------Object and foreach to add cards------------------ */
+/* ------------------- API INSTANCE ------------------ */
+const api = new Api(
+  "98ceb637-6af7-4ed6-84f7-0abd0d26da19",
+  "https://around-api.es.tripleten-services.com/v1"
+);
 
-const api = new Api("98ceb637-6af7-4ed6-84f7-0abd0d26da19", "https://around-api.es.tripleten-services.com/v1");
-
+/* ------------------- USER INFO ---------------------- */
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userAbout: ".profile__profession",
-  userAvatar: ".profile__avatar"
+  userAvatar: ".profile__avatar",
 });
 
-api.getData().then((userData) => {
-    userInfo.setUserInfo({ name: userData.name, about: userData.about , avatar: userData.avatar});
-  }).catch((err) => {
-    console.log(err);
-  });
+/* ------------------- POPUPS ------------------------- */
+// Popup para ver imagen
+const popupWithImage = new PopupWithImage("#popup-image");
+popupWithImage.setEventListeners();
 
-api.getInitialCards().then((cardsData) => {
-const section = new Section(
-  {
-    items: cardsData,
-    renderer: (item) => {
-      const card = new Card(item, "#elements__template", (name, link) => {
-        popupWithImage.openImage({ name: name, link: link });
-      });
+// Popup para editar perfil
+const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
+  api
+    .patchUserInfo({
+      newName: data.name,
+      newAbout: data.about,
+    })
+    .then(() => {
+      userInfo.setUserInfo({ name: data.name, about: data.about });
+      popupWithForm.close();
+    })
+    .catch((err) => console.log(err));
+});
+popupWithForm.setEventListeners();
+
+// Popup para nueva tarjeta
+const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
+  api
+    .newCard({ name: data.name, link: data.link })
+    .then((newCardData) => {
+      const card = new Card(
+        newCardData,
+        "#elements__template",
+        (name, link) => popupWithImage.openImage({ name, link })
+      );
+
       const cardElement = card.generateCard();
-      section.addItem(cardElement);
+      cardList.addItem(cardElement);
+
+      popupNewCard.close();
+    })
+    .catch((err) => console.log(err));
+});
+popupNewCard.setEventListeners();
+
+/* ------------------- SECTION (CARD LIST) ------------------ */
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      const card = new Card(
+        item,
+        "#elements__template",
+        (name, link) => popupWithImage.openImage({ name, link })
+      );
+
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
     },
   },
   ".elements"
 );
-section.renderElements();
-}).catch((err) => {
-    console.log(err);
-});
 
-const popupWithImage = new PopupWithImage("#popup-image");
-popupWithImage.setEventListeners();
-
+/* ------------------- BOTONES ----------------------- */
 editButton.addEventListener("click", () => {
-  const infoProfile = userInfo.getUserInfo();
-  const popProfile = document.querySelector("#popup-profile");
-  const popupForm = popProfile.querySelector(".popup__form");
-  const nameInput = popupForm.querySelector("#popup__name");
-  const aboutInput = popupForm.querySelector("#popup__job");
-  nameInput.value = infoProfile.name.trim();
-  aboutInput.value = infoProfile.about.trim();
+  const info = userInfo.getUserInfo();
+
+  const popupForm = document.querySelector(".popup__form");
+  popupForm.querySelector("#popup__name").value = info.name.trim();
+  popupForm.querySelector("#popup__job").value = info.about.trim();
+
   popupWithForm.open();
 });
-
 
 addButton.addEventListener("click", () => {
   popupNewCard.open();
 });
 
-const validatorForm = new FormValidator(config);
-validatorForm.enableValidation();
+/* ------------------- VALIDADORES --------------------- */
+const validator = new FormValidator(config);
+validator.enableValidation();
 
-const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
-  api.patchUserInfo({newName: data.name, newAbout: data.about})
-  .then(() => {
-    userInfo.setUserInfo({ name: data.name, about: data.about });
-    popupWithForm.close();
+/* ------------------- API CALLS ----------------------- */
+// Cargar datos del usuario
+api
+  .getData()
+  .then((userData) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      about: userData.about,
+      avatar: userData.avatar,
+    });
   })
-});
-popupWithForm.setEventListeners();
+  .catch((err) => console.log(err));
 
-const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
-  const newCard = new Card(data, "#elements__template", (name, link) => {
-    popupWithImage.openImage({ name: name, link: link });
-  });
-  const cardElement = newCard.generateCard();
-  section.addItem(cardElement);
-  popupNewCard.close();
-});
-popupNewCard.setEventListeners();
+// Cargar tarjetas iniciales
+api
+  .getInitialCards()
+  .then((cardsData) => {
+    cardsData.forEach((item) => cardList._renderer(item));
+  })
+  .catch((err) => console.log(err));
