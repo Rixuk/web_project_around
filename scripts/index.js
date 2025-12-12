@@ -9,7 +9,7 @@ import UserInfo from "./UserInfo.js";
 import Api from "./Api.js";
 /*-----------------------------------------------------*/
 
-/* -------- CONFIGURACIÓN DE VALIDACIÓN -------- */
+/* -------- CONFIG VALIDATION -------- */
 const config = {
   formSelector: ".popup__form",
   inputSelector: ".form__inputs",
@@ -18,31 +18,38 @@ const config = {
   inputErrorClass: "form__inputs_type_error",
 };
 
-/* ------------------- DOM ELEMENTS ------------------ */
+/* ------------------- DOM ------------------ */
 const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 const editButton = profile.querySelector(".profile__button");
 const addButton = profile.querySelector(".profile__add-button");
 
-/* ------------------- API INSTANCE ------------------ */
+/* ------------------- API ------------------ */
 const api = new Api(
   "98ceb637-6af7-4ed6-84f7-0abd0d26da19",
   "https://around-api.es.tripleten-services.com/v1"
 );
 
-/* ------------------- USER INFO ---------------------- */
+/* ------------------- USER INFO ------------------ */
 const userInfo = new UserInfo({
   userName: ".profile__name",
   userAbout: ".profile__profession",
   userAvatar: ".profile__avatar",
 });
 
-/* ------------------- POPUPS ------------------------- */
-// Popup para ver imagen
+/* ------------------- POPUPS ------------------ */
 const popupWithImage = new PopupWithImage("#popup-image");
 popupWithImage.setEventListeners();
 
-// Popup para editar perfil
+const popupWithConfirmation = new PopupWithConfirmation(
+  "#popup-confirmation",
+  () => {
+    popupWithConfirmation.close();
+  }
+);
+popupWithConfirmation.setEventListeners();
+
+/* Popup: Edit profile */
 const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
   api
     .patchUserInfo({
@@ -57,44 +64,40 @@ const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
 });
 popupWithForm.setEventListeners();
 
-// Popup para nueva tarjeta
+/* Popup: New card */
 const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
   api
     .newCard({ name: data.name, link: data.link })
     .then((newCardData) => {
-      const card = new Card(
-        newCardData,
-        "#elements__template",
-        (name, link) => popupWithImage.openImage({ name, link }),
-        () => popupConfirmation.open(data._id)
-      );
-
+      const card = createCard(newCardData);
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
-
       popupNewCard.close();
     })
     .catch((err) => console.log(err));
 });
 popupNewCard.setEventListeners();
 
-// Popup para confirmar eliminación
-const popupConfirmation = new PopupWithConfirmation("#popup-confirmation", (id) => {
-  popupConfirmation.close();
-});
+/* ------------------- CARD FACTORY ------------------ */
+function createCard(item) {
+  return new Card(
+    item,
 
-popupConfirmation.setEventListeners();
-/* ------------------- SECTION (CARD LIST) ------------------ */
+    "#elements__template",
+
+    (name, link) => popupWithImage.openImage({ name, link }),
+
+    (cardId) => {
+      popupWithConfirmation.open(cardId);
+    }
+  );
+}
+
+/* ------------------- SECTION (LISTA DE CARDS) ------------------ */
 const cardList = new Section(
   {
     renderer: (item) => {
-      const card = new Card(
-        item,
-        "#elements__template",
-        (name, link) => popupWithImage.openImage({ name, link }),
-        (id) => popupConfirmation.open(id)
-      );
-
+      const card = createCard(item);
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
     },
@@ -102,28 +105,24 @@ const cardList = new Section(
   ".elements"
 );
 
-/* ------------------- BOTONES ----------------------- */
+/* ------------------- BUTTON LISTENERS ------------------ */
 editButton.addEventListener("click", () => {
   const info = userInfo.getUserInfo();
 
-  const popupForm = document.querySelector(".popup__form");
-  popupForm.querySelector("#popup__name").value = info.name.trim();
-  popupForm.querySelector("#popup__job").value = info.about.trim();
+  const popupForm = document.querySelector("#popup-profile");
+  popupForm.querySelector("#popup__name").value = info.name;
+  popupForm.querySelector("#popup__job").value = info.about;
 
   popupWithForm.open();
 });
 
-addButton.addEventListener("click", () => {
-  popupNewCard.open();
-});
+addButton.addEventListener("click", () => popupNewCard.open());
 
-
-/* ------------------- VALIDADORES --------------------- */
+/* ------------------- VALIDATORS ------------------ */
 const validator = new FormValidator(config);
 validator.enableValidation();
 
-/* ------------------- API CALLS ----------------------- */
-// Cargar datos del usuario
+/* ------------------- API CALLS ------------------ */
 api
   .getData()
   .then((userData) => {
@@ -135,7 +134,6 @@ api
   })
   .catch((err) => console.log(err));
 
-// Cargar tarjetas iniciales
 api
   .getInitialCards()
   .then((cardsData) => {

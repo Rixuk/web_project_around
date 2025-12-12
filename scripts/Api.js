@@ -55,4 +55,13 @@ export default class Api {
     }).then(this._checkResponse)
     .catch(this._checkError); 
   }
+  deleteCard(cardId){
+    return fetch(this.url + "/cards/:" + cardId,{
+      method: "DELETE",
+      headers: {
+        authorization: this.token,
+      }
+    }).then(this._checkResponse)
+    .catch(this._checkError); 
+  }
 }
