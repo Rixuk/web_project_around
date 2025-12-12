@@ -3,6 +3,7 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithConfirmation from "./PopupWithConfirmation.js";
 import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 import Api from "./Api.js";
@@ -73,6 +74,11 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
       popupNewCard.close();
     })
     .catch((err) => console.log(err));
+});
+
+// Popup para confirmar eliminación
+const popupConfirmation = new PopupWithConfirmation("#popup-confirmation", () => {
+  
 });
 popupNewCard.setEventListeners();
 

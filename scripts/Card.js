@@ -22,9 +22,9 @@ export default class Card {
   _trashButton() {
     this._clon
       .querySelector(".elements__trash")
-      .addEventListener("click", (evt) => {
-        evt.target.parentElement.remove();
-      });
+      .addEventListener("click", () => {
+        document.querySelector("#popup-confirmation").classList.add("popup__opened");
+      }); 
   }
 
   generateCard() {
