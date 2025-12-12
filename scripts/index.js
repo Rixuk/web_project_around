@@ -65,7 +65,8 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
       const card = new Card(
         newCardData,
         "#elements__template",
-        (name, link) => popupWithImage.openImage({ name, link })
+        (name, link) => popupWithImage.openImage({ name, link }),
+        () => popupConfirmation.open(data._id)
       );
 
       const cardElement = card.generateCard();
@@ -75,13 +76,14 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
     })
     .catch((err) => console.log(err));
 });
-
-// Popup para confirmar eliminación
-const popupConfirmation = new PopupWithConfirmation("#popup-confirmation", () => {
-  
-});
 popupNewCard.setEventListeners();
 
+// Popup para confirmar eliminación
+const popupConfirmation = new PopupWithConfirmation("#popup-confirmation", (id) => {
+  popupConfirmation.close();
+});
+
+popupConfirmation.setEventListeners();
 /* ------------------- SECTION (CARD LIST) ------------------ */
 const cardList = new Section(
   {
@@ -89,7 +91,8 @@ const cardList = new Section(
       const card = new Card(
         item,
         "#elements__template",
-        (name, link) => popupWithImage.openImage({ name, link })
+        (name, link) => popupWithImage.openImage({ name, link }),
+        (id) => popupConfirmation.open(id)
       );
 
       const cardElement = card.generateCard();
@@ -113,6 +116,7 @@ editButton.addEventListener("click", () => {
 addButton.addEventListener("click", () => {
   popupNewCard.open();
 });
+
 
 /* ------------------- VALIDADORES --------------------- */
 const validator = new FormValidator(config);

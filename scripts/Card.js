@@ -1,17 +1,24 @@
 export default class Card {
-  constructor(data, templateSelector, popupImage) {
+  constructor(data, templateSelector, popupImage, popupConfirmation) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
+
     this._templateSelector = templateSelector;
-    this._clon = this._getTemplate();
+
     this._popupImage = popupImage;
+    this._popupConfirmation = popupConfirmation;
+
+    this._clon = this._getTemplate();
   }
+
   _getTemplate() {
     const clon = document
       .querySelector(this._templateSelector)
       .content.cloneNode(true);
     return clon;
   }
+
   _likeButton() {
     this._clon
       .querySelector(".elements__like")
@@ -19,26 +26,31 @@ export default class Card {
         evt.target.classList.toggle("elements__like-enabled");
       });
   }
+
   _trashButton() {
     this._clon
       .querySelector(".elements__trash")
       .addEventListener("click", () => {
-        document.querySelector("#popup-confirmation").classList.add("popup__opened");
-      }); 
+        this._popupConfirmation(this._id);
+      });
   }
 
   generateCard() {
     this._element = this._clon;
-    this._clon.querySelector(".elements__image").src = this._link;
-    this._clon.querySelector(".elements__image").alt = this._name;
+
+    const image = this._clon.querySelector(".elements__image");
+    image.src = this._link;
+    image.alt = this._name;
+
     this._clon.querySelector(".elements__location").textContent = this._name;
+
     this._likeButton();
     this._trashButton();
-    this._clon
-      .querySelector(".elements__image")
-      .addEventListener("click", () => {
+
+    image.addEventListener("click", () => {
         this._popupImage(this._name, this._link);
-      }); //this._popupCard();
+      });
+      
     return this._element;
   }
 }
