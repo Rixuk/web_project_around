@@ -44,6 +44,7 @@ popupWithImage.setEventListeners();
 const popupWithConfirmation = new PopupWithConfirmation(
   "#popup-confirmation",
   () => {
+    console.log(id),
     popupWithConfirmation.close();
   }
 );
@@ -87,8 +88,9 @@ function createCard(item) {
 
     (name, link) => popupWithImage.openImage({ name, link }),
 
-    (cardId) => {
-      popupWithConfirmation.open(cardId);
+    (id) => {
+      popupWithConfirmation.open(id);
+      console.log(`Muestra ${id} desde index`);
     }
   );
 }

@@ -56,7 +56,7 @@ export default class Api {
     .catch(this._checkError); 
   }
   deleteCard(cardId){
-    return fetch(this.url + "/cards/:" + cardId,{
+    return fetch(this.url + "/cards/" + cardId,{
       method: "DELETE",
       headers: {
         authorization: this.token,
