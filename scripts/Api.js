@@ -60,6 +60,7 @@ export default class Api {
       method: "DELETE",
       headers: {
         authorization: this.token,
+        "Content-Type": "application/json"
       }
     }).then(this._checkResponse)
     .catch(this._checkError); 

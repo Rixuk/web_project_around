@@ -16,6 +16,19 @@ export default class PopupWithConfirmation extends Popup {
     });
   }
 
+  setLoading(isLoading) {
+  const button = this._form.querySelector(".popup__save");
+  if (isLoading) {
+    this._defaultText = button.textContent;
+    button.textContent = "Eliminando...";
+    button.disabled = true;
+  } else {
+    button.textContent = this._defaultText;
+    button.disabled = false;
+  }
+}
+
+
   close() {
     super.close();
   }

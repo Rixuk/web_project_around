@@ -24,6 +24,10 @@ const profile = content.querySelector(".profile");
 const editButton = profile.querySelector(".profile__button");
 const addButton = profile.querySelector(".profile__add-button");
 
+let cardToDelete = {
+  id: null,
+  element: null,
+}
 /* ------------------- API ------------------ */
 const api = new Api(
   "98ceb637-6af7-4ed6-84f7-0abd0d26da19",
@@ -43,9 +47,19 @@ popupWithImage.setEventListeners();
 
 const popupWithConfirmation = new PopupWithConfirmation(
   "#popup-confirmation",
-  () => {
-    console.log(id),
-    popupWithConfirmation.close();
+  (id) => {
+    popupWithConfirmation.setLoading(true);
+    
+    api.deleteCard(id)
+    .then(() => {
+      cardToDelete.element.remove();
+      popupWithConfirmation.close();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupWithConfirmation.setLoading(false);
+      cardToDelete = { id: "", element: "" };
+    });
   }
 );
 popupWithConfirmation.setEventListeners();
@@ -88,9 +102,10 @@ function createCard(item) {
 
     (name, link) => popupWithImage.openImage({ name, link }),
 
-    (id) => {
+    (id, element) => {
+      cardToDelete.id = id;
+      cardToDelete.element = element;
       popupWithConfirmation.open(id);
-      console.log(`Muestra ${id} desde index`);
     }
   );
 }
@@ -142,3 +157,5 @@ api
     cardsData.forEach((item) => cardList._renderer(item));
   })
   .catch((err) => console.log(err));
+
+  

@@ -31,12 +31,12 @@ export default class Card {
     this._clon
       .querySelector(".elements__trash")
       .addEventListener("click", () => {
-        this._popupConfirmation(this._id);
+        this._popupConfirmation(this._id, this._element);
       });
   }
 
   generateCard() {
-    this._element = this._clon;
+    this._element = this._clon.firstElementChild;
 
     const image = this._clon.querySelector(".elements__image");
     image.src = this._link;
