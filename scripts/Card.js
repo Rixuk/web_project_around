@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, templateSelector, popupImage, popupConfirmation) {
+  constructor(data, templateSelector, popupImage, popupConfirmation, toggleLike) {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -8,6 +8,7 @@ export default class Card {
 
     this._popupImage = popupImage;
     this._popupConfirmation = popupConfirmation;
+    this._toggleLike = toggleLike;
 
     this._clon = this._getTemplate();
   }
@@ -24,6 +25,7 @@ export default class Card {
       .querySelector(".elements__like")
       .addEventListener("click", (evt) => {
         evt.target.classList.toggle("elements__like-enabled");
+        this._toggleLike(this._id, evt.target.classList.contains("elements__like-enabled"));
       });
   }
 

@@ -106,6 +106,13 @@ function createCard(item) {
       cardToDelete.id = id;
       cardToDelete.element = element;
       popupWithConfirmation.open(id);
+    },
+    (id, isLiked) => {
+      api.toggleLike(id, isLiked)
+      .then((updatedCard) => {
+        console.log(updatedCard);
+      })
+      .catch((err) => console.log(err));
     }
   );
 }
@@ -155,7 +162,6 @@ api
   .getInitialCards()
   .then((cardsData) => {
     cardsData.forEach((item) => cardList._renderer(item));
+    console.log(cardsData)
   })
   .catch((err) => console.log(err));
-
-  

@@ -65,4 +65,14 @@ export default class Api {
     }).then(this._checkResponse)
     .catch(this._checkError); 
   }
+  toggleLike(cardId, isLiked){
+    return fetch(this.url + "/cards/" + cardId + "/likes",{
+      method: isLiked ? "PUT" : "DELETE",
+      headers: {
+        authorization: this.token,
+        "Content-Type": "application/json"
+      }
+    }).then(this._checkResponse)
+    .catch(this._checkError);
+  }
 }
