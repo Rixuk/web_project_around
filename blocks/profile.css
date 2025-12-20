@@ -11,16 +11,33 @@
   display: flex;
   position: relative;
 }
-.profile__picture:hover {
-  cursor: pointer;
-  opacity: 0.8;
-  background-image: url("../images/Vector.png");
-}
 .profile__avatar {
   width: 120px;
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
+}
+.profile__edit-icon-container {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+.profile__edit-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.9;
+}
+.profile__picture:hover .profile__edit-icon-container {
+  background-color: #000;
+  cursor: pointer;
+  opacity: .8;
 }
 .profile__info {
   width: 60%;
