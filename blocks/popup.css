@@ -52,14 +52,6 @@
 .popup__title {
   margin-top: 34px;
 }
-.popup__name {
-  margin-top: 54px;
-  border-bottom: 1px solid #c4c4c4;
-}
-.popup__aboutme {
-  margin-top: 30px;
-  border-bottom: 1px solid #c4c4c4;
-}
 .popup__save {
   margin-top: 48px;
   font-size: 18px;
@@ -102,6 +94,10 @@
 #popup-images__location {
   color: #fff;
   font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+.form__inputs{
+  margin-top: 30px;
+  border-bottom: 1px solid #c4c4c4;
 }
 .form__inputs_type_error {
   border-bottom: 1px solid red;

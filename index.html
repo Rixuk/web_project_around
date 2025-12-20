@@ -134,6 +134,23 @@
               <button class="popups__close"></button>
             </div>
           </div>
+          <div class="popups" id="popup-edit-profile">
+            <div class="popup__overlay"></div>
+            <div class="popup__window">
+              <h2 class="popup__title popup__style">Cambiar foto de perfil</h2>
+              <form class="popup__form" novalidate>
+                <fieldset class="popup__fieldset">
+                  <input type="text" name="avatar" placeholder="Enlace a la imagen" class="popup__avatar popup__style form__inputs" id="edit-avatar__link" required />
+                  <span
+                    class="form__inputs-error_active"
+                    id="edit-avatar__link-error"
+                  ></span>
+                  <button type="button" class="popup__save popup__style">Guardar</button>
+                </fieldset>
+              </form>
+              <button class="popups__close"></button>
+            </div>
+          </div>
         </section>
         <!--Este es el contenedor donde se agregan todas las tarjetas creadas con "template", POR LO QUE ES IMPORTANTE TAMBIÉN TENERLO EN CUENTA-->
         <section class="elements"></section>
