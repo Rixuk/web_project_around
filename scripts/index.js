@@ -2,6 +2,7 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
+import PopupWithAvatar from "./PopupWithAvatar.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
 import Section from "./Section.js";
@@ -23,6 +24,7 @@ const content = document.querySelector(".content");
 const profile = content.querySelector(".profile");
 const editButton = profile.querySelector(".profile__button");
 const addButton = profile.querySelector(".profile__add-button");
+const avatarButton = profile.querySelector(".profile__edit-icon-container");
 
 let cardToDelete = {
   id: null,
@@ -93,6 +95,9 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
 });
 popupNewCard.setEventListeners();
 
+/* Popup: Update avatar */
+const popupWithAvatar = new PopupWithAvatar("#popup-edit-profile", (data) => {});
+popupWithAvatar.setEventListeners();
 /* ------------------- CARD FACTORY ------------------ */
 function createCard(item) {
   return new Card(
@@ -142,6 +147,7 @@ editButton.addEventListener("click", () => {
 
 addButton.addEventListener("click", () => popupNewCard.open());
 
+avatarButton.addEventListener("click", () => popupWithAvatar.open());
 /* ------------------- VALIDATORS ------------------ */
 const validator = new FormValidator(config);
 validator.enableValidation();
