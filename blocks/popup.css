@@ -64,6 +64,13 @@
   cursor: pointer;
   opacity: 0.5;
 }
+.popup__save_disabled{
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  opacity: 20%;
+  pointer-events: none;
+}
 .popups__close {
   width: 40px;
   height: 40px;

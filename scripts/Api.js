@@ -41,6 +41,19 @@ export default class Api {
     }).then(this._checkResponse)
     .catch(this._checkError); 
   }
+  patchUserAvatar({ avatarLink }) {
+    return fetch(this.url + "/users/me/avatar", {
+      method: "PATCH",
+      headers: {
+        authorization: this.token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        avatar: avatarLink
+      })
+    }).then(this._checkResponse)
+    .catch(this._checkError); 
+  }
   newCard({ name, link }) {
     return fetch(this.url + "/cards", {
       method: "POST",

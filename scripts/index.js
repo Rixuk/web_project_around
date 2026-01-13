@@ -2,7 +2,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithForm from "./PopupWithForm.js";
-import PopupWithAvatar from "./PopupWithAvatar.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithConfirmation from "./PopupWithConfirmation.js";
 import Section from "./Section.js";
@@ -14,8 +13,8 @@ import Api from "./Api.js";
 const config = {
   formSelector: ".popup__form",
   inputSelector: ".form__inputs",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_disabled",
+  submitButtonSelector: ".popup__save",
+  inactiveButtonClass: "popup__save_disabled",
   inputErrorClass: "form__inputs_type_error",
 };
 
@@ -96,7 +95,12 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
 popupNewCard.setEventListeners();
 
 /* Popup: Update avatar */
-const popupWithAvatar = new PopupWithAvatar("#popup-edit-profile", (data) => {});
+const popupWithAvatar = new PopupWithForm("#popup-edit-profile", (data) => {
+  api.patchUserAvatar({ avatarLink: data.avatar }).then(() => {
+    userInfo.setAvatar({ avatar: data.avatar });
+    popupWithAvatar.close();
+  }).catch((err) => console.log(err));
+});
 popupWithAvatar.setEventListeners();
 /* ------------------- CARD FACTORY ------------------ */
 function createCard(item) {
@@ -159,8 +163,8 @@ api
     userInfo.setUserInfo({
       name: userData.name,
       about: userData.about,
-      avatar: userData.avatar,
     });
+    userInfo.setAvatar({ avatar: userData.avatar, });
   })
   .catch((err) => console.log(err));
 
