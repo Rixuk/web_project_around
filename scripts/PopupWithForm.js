@@ -28,4 +28,15 @@ export default class PopupWithForm extends Popup {
     super.close();
     this._form.reset();
   }
+  setLoading(isLoading) {
+  const button = this._form.querySelector(".popup__save");
+  if (isLoading) {
+    this._defaultText = button.textContent;
+    button.textContent = "Guardando...";
+    button.disabled = true;
+  } else {
+    button.textContent = this._defaultText;
+    button.disabled = false;
+  }
+}
 }

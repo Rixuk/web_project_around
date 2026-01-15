@@ -67,6 +67,7 @@ popupWithConfirmation.setEventListeners();
 
 /* Popup: Edit profile */
 const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
+  popupWithForm.setLoading(true);
   api
     .patchUserInfo({
       newName: data.name,
@@ -76,12 +77,15 @@ const popupWithForm = new PopupWithForm("#popup-profile", (data) => {
       userInfo.setUserInfo({ name: data.name, about: data.about });
       popupWithForm.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err)).finally(() => {
+      popupWithForm.setLoading(false);
+    });
 });
 popupWithForm.setEventListeners();
 
 /* Popup: New card */
 const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
+  popupNewCard.setLoading(true);
   api
     .newCard({ name: data.name, link: data.link })
     .then((newCardData) => {
@@ -90,16 +94,21 @@ const popupNewCard = new PopupWithForm("#popup-cards", (data) => {
       cardList.addItem(cardElement);
       popupNewCard.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err)).finally(() => {
+      popupNewCard.setLoading(false);
+    });
 });
 popupNewCard.setEventListeners();
 
 /* Popup: Update avatar */
 const popupWithAvatar = new PopupWithForm("#popup-edit-profile", (data) => {
+  popupWithAvatar.setLoading(true);
   api.patchUserAvatar({ avatarLink: data.avatar }).then(() => {
     userInfo.setAvatar({ avatar: data.avatar });
     popupWithAvatar.close();
-  }).catch((err) => console.log(err));
+  }).catch((err) => console.log(err)).finally(() => {
+    popupWithAvatar.setLoading(false);
+  });
 });
 popupWithAvatar.setEventListeners();
 /* ------------------- CARD FACTORY ------------------ */
